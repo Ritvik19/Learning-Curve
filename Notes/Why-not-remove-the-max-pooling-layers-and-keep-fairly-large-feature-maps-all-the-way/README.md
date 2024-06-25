@@ -1,0 +1,5 @@
+# Why not remove the max-pooling layers and keep fairly large feature maps all the way
+
+The reason to use downsampling is to reduce the number of feature-map coefficients to process, as well as to induce spatial-filter hierarchies by making successive convolution layers look at increasingly large windows (in terms of the fraction of the original input they cover).
+
+We can also achieve downsampling by using strides in the prior convolution layer, or using average pooling. But max pooling tends to work better, the reason is that the features tend to encode the spatial presence of some pattern over the tiles of the feature map and it is more informative to look at the maximal presence of different features that at their average presence, also looking at sparser windows of the inputs (via strided convolutions) could cause to miss or dilute feature presence.

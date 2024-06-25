@@ -1,0 +1,5 @@
+# Distinction between segmentation encoder and classifier network
+
+One important difference between the first half of this segmentation model and the classification models is the way we do downsampling:
+
+Here, we downsample by adding strides to every other convolution layer. We do this because, in the case of image segmentation, we care a lot about the spatial location of information in the image, since we need to produce per-pixel target masks as output of the model. When you do 2 × 2 max pooling, you are completely destroying location information within each pooling window: you return one scalar value per window, with zero knowledge of which of the four locations in the windows the value came from. So while max pooling layers perform well for classification tasks, they would hurt us quite a bit for a segmentation task. Meanwhile, strided convolutions do a better job at downsampling feature maps while retaining location information.

@@ -1,0 +1,13 @@
+# Learning to Rank
+
+Learning to rank is a supervised learning problem. Among others, one frequent problem solved using learning to rank is the optimization of search results returned by a search engine for a query.
+
+In search result ranking optimization, a labeled example Xi in the training set of size N is a ranked collection of documents of size ri (labels are ranks of documents). A feature vector represents each document in the collection. The goal of the learning is to find a ranking function f which outputs values that can be used to rank documents. For each training example, an ideal function f would output values that induce the same ranking of documents as given by the labels.
+
+There are three approaches to solve that problem: **pointwise**, **pairwise**, and **listwise**.
+
+The pointwise approach transforms each training example into multiple examples: one example per document. The learning problem becomes a standard supervised learning problem, either regression or logistic regression. In each example (x, y) of the pointwise learning problem, x is the feature vector of some document, and y is the original score (if yi,j is a score) or a synthetic score obtained from the ranking (the higher the rank, the lower the synthetic score). Any supervised learning algorithm can be used in this case. The solution is usually far from perfect. Principally, this is because each document is considered in isolation, while the original ranking (given by the labels yi,j of the original training set) could optimize the positions of the whole set of documents. For example, if we have already given a high rank to a Wikipedia page in some collection of documents, we would prefer not giving a high rank to another Wikipedia page for the same query.
+
+In the pairwise approach, we also consider documents in isolation, but, in this case, a pair of documents is considered at once. Given a pair of documents (xi, xk) we build a model f, which, given (xi, xk) as input, outputs a value close to 1, if xi should be higher than xk in the ranking; otherwise, f outputs a value close to 0. At the test time, the final ranking for an unlabeled example X is obtained by aggregating the predictions for all pairs of documents in X. The pairwise approach works better than pointwise, but is still far from perfect.
+
+The state of the art rank learning algorithms, such as LambdaMART, implement the listwise approach. In the listwise approach, we try to optimize the model directly on some metric that reflects the quality of ranking.
