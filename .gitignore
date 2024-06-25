@@ -130,3 +130,6 @@ dmypy.json
 
 # Datasets
 *.csv
+
+# scripts
+scripts.ipynb
